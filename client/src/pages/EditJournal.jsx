@@ -1,8 +1,9 @@
 import React from 'react'
+import EditForm from '../components/EditForm'
 
 const EditJournal = () => {
   return (
-    <div>EditJournal</div>
+    <div><EditForm/></div>
   )
 }
 

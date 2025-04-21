@@ -12,8 +12,26 @@ const getJournals = async (req, res) => {
   }
 }
 
+const getJournal = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const journal = await journalModel.findById(id)
+    if (journal) {
+      res.status(200).json({ message: 'Journal successfully fetched', journal })
+    } else {
+      res.status(404).json({ message: 'Journal Entry not found or deleted' })
+    }
+  } catch (error) {
+    console.log('Error while fetching journal : ', error)
+    res
+      .status(500)
+      .json({ message: 'Error fetching the jounrnal', error: error.message })
+  }
+}
+
 const createJournal = async (req, res) => {
-  console.log('create journal entry point hit')
+  console.log('Create journal entry point hit')
   const { title, description } = req.body
 
   try {
@@ -89,4 +107,4 @@ const updateJournal = async (req, res) => {
   }
 }
 
-module.exports = { getJournals, createJournal, deleteJournal, updateJournal }
+module.exports = { getJournals,getJournal, createJournal, deleteJournal, updateJournal }
