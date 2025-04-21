@@ -13,6 +13,7 @@ const getJournals = async (req, res) => {
 }
 
 const createJournal = async (req, res) => {
+  console.log('create journal entry point hit')
   const { title, description } = req.body
 
   try {
@@ -70,12 +71,10 @@ const updateJournal = async (req, res) => {
     )
 
     if (updatedJournal) {
-      res
-        .status(200)
-        .json({
-          message: 'Successfully updated the Journal Entry',
-          updatedJournal,
-        })
+      res.status(200).json({
+        message: 'Successfully updated the Journal Entry',
+        updatedJournal,
+      })
     } else {
       res
         .status(404)

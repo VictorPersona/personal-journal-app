@@ -1,8 +1,11 @@
 {
   "journals": [
     {
+      "_id": "6804d79c0f22b6b25aad87d4",
       "title": "My First Entry",
-      "description": "Today I started writing my journal API!"
+      "description": "Today I started writing my journal API!",
+      "date": "2025-04-20T11:09:40.037Z",
+      "__v": 0
     }
   ]
 }

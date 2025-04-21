@@ -3,7 +3,7 @@ import JournalList from '../components/JournalList'
 
 const Home = () => {
   return (
-    <div>Home
+    <div>
 <JournalList/>
         
     </div>
