@@ -77,7 +77,7 @@ const JournalForm = () => {
 
       <button
         type="submit"
-        className="mt-4 bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition-all"
+        className="mt-4 bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700 transition-all cursor-pointer"
       >
         Save Entry
       </button>
