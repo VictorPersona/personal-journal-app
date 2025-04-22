@@ -2,7 +2,7 @@ const journalModel = require('../models/Journal')
 
 const getJournals = async (req, res) => {
   try {
-    const journals = await journalModel.find().sort({ date: -1 })
+    const journals = await journalModel.find({userId:req.user._id}).sort({ date: -1 })
     res.status(200).json({ message: 'Journals successfully fetched', journals })
   } catch (error) {
     console.error('Error while fetching Journals', error)
@@ -31,13 +31,14 @@ const getJournal = async (req, res) => {
 }
 
 const createJournal = async (req, res) => {
-  console.log('Create journal entry point hit')
+  
   const { title, description } = req.body
 
   try {
     const newJournalEntry = new journalModel({
-      title: title,
-      description: description,
+      title,
+      description,
+      userId : req.user._id
     })
     const response = await newJournalEntry.save()
 
@@ -57,6 +58,13 @@ const deleteJournal = async (req, res) => {
   const { id } = req.params
 
   try {
+
+    const journal = await journalModel.findById(id)
+
+    if(!journal || journal.userId.toString() !== req.user._id.toString()){
+      return res.status(403).json({message:"Not Authorized"})
+    }
+
     const response = await journalModel.findByIdAndDelete(id)
 
     if (response) {
@@ -82,6 +90,12 @@ const updateJournal = async (req, res) => {
   const { title, description } = req.body
 
   try {
+
+    const journal = await journalModel.findById(id)
+    if(!journal || journal.userId.toString()!==req.user._id.toString()){
+      return res.status(403).json({message:"Not Authorized"})
+    }
+
     const updatedJournal = await journalModel.findByIdAndUpdate(
       id,
       { title: title, description: description },
