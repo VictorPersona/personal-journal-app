@@ -27,7 +27,7 @@ export const JournalProvider = ({ children }) => {
     fetchAllJorunalData()
   }, [])
 
-  const values = { allJournalData,backendUrl }
+  const values = { allJournalData,backendUrl,fetchAllJorunalData }
   return (
     <JournalContext.Provider value={values}>{children}</JournalContext.Provider>
   )

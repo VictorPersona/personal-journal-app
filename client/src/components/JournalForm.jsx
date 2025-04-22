@@ -8,7 +8,7 @@ const JournalForm = () => {
     description: '',
   })
 
-  const { backendUrl } = useContext(JournalContext)
+  const { backendUrl, fetchAllJorunalData } = useContext(JournalContext)
   if (!backendUrl) {
     console.warn('⚠️ backendUrl is not defined in context')
   }
@@ -25,11 +25,13 @@ const JournalForm = () => {
         title: journalData.title,
         description: journalData.description,
       })
+      await fetchAllJorunalData()
       console.log(response.data.message)
     } catch (error) {
       console.error('Journal Entry creation failed due to error :', error)
     } finally {
       setJournalData({ title: '', description: '' })
+      
     }
   }
 

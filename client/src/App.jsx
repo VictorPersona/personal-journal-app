@@ -5,6 +5,8 @@ import EditJournal from './pages/EditJournal'
 import DeleteJournal from './pages/DeleteJournal'
 import ViewJournal from './pages/ViewJournal'
 import Home from './pages/Home'
+import Navbar from './components/Navbar'
+import ListJournals from './pages/ListJournals'
 
 const App = () => {
   useEffect(() => {
@@ -15,12 +17,14 @@ const App = () => {
 
   return (
     <div>
+      <Navbar />
       <Routes>
-        <Route path="/" element={< Home/>} />
+        <Route path="/" element={<Home />} />
         <Route path="/create" element={<CreateJournal />} />
         <Route path="/edit/:id" element={<EditJournal />} />
         <Route path="/delete/:id" element={<DeleteJournal />} />
         <Route path="/view/:id" element={<ViewJournal />} />
+        <Route path="/list" element={<ListJournals />} />
       </Routes>
     </div>
   )

@@ -1,16 +1,32 @@
-import React, { useContext } from 'react'
+import React, { useContext,useEffect } from 'react'
 import { JournalContext } from '../context/JournalProvider'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import axios from 'axios'
 
 const DeleteJournal = () => {
-  const {backendUrl} = useContext(JournalContext)
+  const { backendUrl, fetchAllJorunalData } = useContext(JournalContext)
   const params = useParams()
+  const navigate = useNavigate()
 
-  const deleteJournal=async()=>{
-    
-  }
+  useEffect(() => {
+    const deleteJournal = async () => {
+      try {
+        const response = await axios.delete(
+          backendUrl + 'journals/' + params.id
+        )
+        await fetchAllJorunalData()
+        
+        navigate('/')
+      } catch (error) {
+        console.error('Errror in deleting Journal')
+      }
+    }
+    deleteJournal()
+  }, [])
   return (
-    <div>DeleteJournal</div>
+    <div>
+      <p>Deleting Journal ...</p>
+    </div>
   )
 }
 

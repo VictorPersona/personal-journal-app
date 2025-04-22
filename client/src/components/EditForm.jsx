@@ -6,7 +6,7 @@ import axios from 'axios'
 const EditForm = () => {
   const [journalData, setJournalData] = useState({ title: '', description: '' })
   const params = useParams()
-  const { backendUrl } = useContext(JournalContext)
+  const { backendUrl, fetchAllJorunalData } = useContext(JournalContext)
   if (!backendUrl) {
     console.warn('⚠️ backendUrl is not defined in context')
   }
@@ -34,6 +34,7 @@ const EditForm = () => {
         title: journalData.title,
         description: journalData.description,
       })
+      await fetchAllJorunalData()
       console.log('Journal Updated ', response.data)
     } catch (error) {
       console.error('Error in Updating Journal')
