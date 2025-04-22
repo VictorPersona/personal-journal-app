@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const express = require('express')
 const journalRouter = require('./routes/journalRoutes')
+const userRouter = require('./routes/auth.js')
 require('dotenv').config()
 
 const app = express()
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/journals', journalRouter)
+app.use('/auth', userRouter)
 
 app.listen(PORT, () => {
   console.log('Server has started')
