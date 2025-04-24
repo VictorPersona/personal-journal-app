@@ -7,6 +7,7 @@ import ViewJournal from './pages/ViewJournal'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import ListJournals from './pages/ListJournals'
+import Login from './components/Login'
 
 const App = () => {
   useEffect(() => {
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/delete/:id" element={<DeleteJournal />} />
         <Route path="/view/:id" element={<ViewJournal />} />
         <Route path="/list" element={<ListJournals />} />
+        <Route path='/login' element={<Login/>}></Route>
       </Routes>
     </div>
   )

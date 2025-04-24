@@ -4,7 +4,24 @@ export const JournalContext = createContext()
 
 export const JournalProvider = ({ children }) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL
-  
+
+  const [token, setToken] = useState(localStorage.getItem('token') || null)
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token)
+    } else {
+      localStorage.removeItem('token')
+    }
+  }, [token])
+
+  const login = (token) => {
+    setToken(token)
+  }
+
+  const logout = () => {
+    setToken(null)
+  }
 
   const [allJournalData, setAllJournalData] = useState([])
 
@@ -13,8 +30,6 @@ export const JournalProvider = ({ children }) => {
       const response = await axios.get(backendUrl + 'journals')
       if (response) {
         setAllJournalData(response.data.journals)
-        
-        
       } else {
         console.error(response.message)
       }
@@ -27,7 +42,15 @@ export const JournalProvider = ({ children }) => {
     fetchAllJorunalData()
   }, [])
 
-  const values = { allJournalData,backendUrl,fetchAllJorunalData }
+  const values = {
+    allJournalData,
+    backendUrl,
+    fetchAllJorunalData,
+    login,
+    logout,
+
+    token,
+  }
   return (
     <JournalContext.Provider value={values}>{children}</JournalContext.Provider>
   )
