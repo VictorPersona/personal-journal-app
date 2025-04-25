@@ -8,7 +8,7 @@ const JournalForm = () => {
     description: '',
   })
 
-  const { backendUrl, fetchAllJorunalData } = useContext(JournalContext)
+  const { backendUrl, fetchAllJorunalData, token } = useContext(JournalContext)
   if (!backendUrl) {
     console.warn('⚠️ backendUrl is not defined in context')
   }
@@ -21,17 +21,20 @@ const JournalForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(backendUrl + 'journals', {
-        title: journalData.title,
-        description: journalData.description,
-      })
+      const response = await axios.post(
+        backendUrl + 'journals',
+        {
+          title: journalData.title,
+          description: journalData.description,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
       await fetchAllJorunalData()
       console.log(response.data.message)
     } catch (error) {
       console.error('Journal Entry creation failed due to error :', error)
     } finally {
       setJournalData({ title: '', description: '' })
-      
     }
   }
 

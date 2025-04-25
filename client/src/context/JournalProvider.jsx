@@ -27,7 +27,11 @@ export const JournalProvider = ({ children }) => {
 
   const fetchAllJorunalData = async () => {
     try {
-      const response = await axios.get(backendUrl + 'journals')
+      const response = await axios.get(backendUrl + 'journals', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       if (response) {
         setAllJournalData(response.data.journals)
       } else {

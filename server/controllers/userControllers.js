@@ -1,10 +1,11 @@
-const User  =require('../models/UserModel')
+const User = require('../models/UserModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
-
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 const registerUser = async (req, res) => {
+  console.log(req.body)
   const { userName, email, password } = req.body
 
   try {
@@ -56,4 +57,4 @@ const loginUser = async (req, res) => {
   }
 }
 
-module.exports = {registerUser,loginUser}
+module.exports = { registerUser, loginUser }

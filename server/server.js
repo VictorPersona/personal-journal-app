@@ -11,7 +11,9 @@ const PORT = process.env.PORT || 5000
 const URI = process.env.MONGODB_URI
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin:"*"
+}))
 
 mongoose
   .connect(URI)

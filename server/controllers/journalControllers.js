@@ -1,6 +1,7 @@
 const journalModel = require('../models/Journal')
 
 const getJournals = async (req, res) => {
+  console.log('User making the request:', req.user)
   try {
     const journals = await journalModel.find({userId:req.user._id}).sort({ date: -1 })
     res.status(200).json({ message: 'Journals successfully fetched', journals })

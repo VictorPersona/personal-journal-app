@@ -6,15 +6,20 @@ import axios from 'axios'
 const EditForm = () => {
   const [journalData, setJournalData] = useState({ title: '', description: '' })
   const params = useParams()
-  const { backendUrl, fetchAllJorunalData } = useContext(JournalContext)
+  const { backendUrl, fetchAllJorunalData, token } = useContext(JournalContext)
   if (!backendUrl) {
     console.warn('⚠️ backendUrl is not defined in context')
   }
 
   const fetchJournalData = async () => {
-    const response = await axios.get(backendUrl + 'journals/' + params.id)
+    console.log('Token :', token)
+    const response = await axios.get(backendUrl + 'journals/' + params.id, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
     const responseData = await response.data.journal
-    if(!responseData){return alert("Journal not found")}
+    if (!responseData) {
+      return alert('Journal not found')
+    }
     setJournalData({
       title: responseData.title,
       description: responseData.description,
@@ -30,10 +35,14 @@ const EditForm = () => {
       return window.alert('Please Enter Title and Description')
     }
     try {
-      const response = await axios.put(backendUrl + 'journals/' + params.id, {
-        title: journalData.title,
-        description: journalData.description,
-      })
+      const response = await axios.put(
+        backendUrl + 'journals/' + params.id,
+        {
+          title: journalData.title,
+          description: journalData.description,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
       await fetchAllJorunalData()
       console.log('Journal Updated ', response.data)
     } catch (error) {
