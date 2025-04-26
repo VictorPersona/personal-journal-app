@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 const Login = () => {
   const { backendUrl, login, token } = useContext(JournalContext)
   const navigate = useNavigate()
-  const [loginState, setLoginState] = useState('signup')
+  const [loginState, setLoginState] = useState('login')
   const [userData, setUserData] = useState({
     userName: '',
     email: '',

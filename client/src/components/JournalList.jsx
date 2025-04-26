@@ -1,10 +1,15 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import JournalCard from './JournalCard'
 import { JournalContext } from '../context/JournalProvider'
 
 const JournalList = () => {
   const { allJournalData, fetchAllJorunalData } = useContext(JournalContext)
-  useContext(()=>{fetchAllJorunalData()},[])
+  useEffect(() => {
+    fetchAllJorunalData()
+  }, [])
+
+  console.log('Journal List is loading')
+  console.log(allJournalData)
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 ls:grid-cols-3 gap-6 p-6">

@@ -9,6 +9,16 @@ const JournalCard = ({ journal }) => {
     month: 'long',
     year: 'numeric',
   })
+
+  const handleOnDelete = (e) => {
+    e.stopPropagation()
+    navigate(`delete/${_id}`)
+  }
+
+  const handleOnEdit = (e) => {
+    e.stopPropagation()
+    navigate(`edit/${_id}`)
+  }
   return (
     <div
       onClick={() => navigate(`/view/${_id}`)}
@@ -20,6 +30,20 @@ const JournalCard = ({ journal }) => {
       </div>
 
       <div className="text-gray-600">{description}</div>
+      <div className="flex justify-end space-x-3 mt-4">
+        <button
+          onClick={handleOnEdit}
+          className="bg-blue-500 text-white px-4 py-1 rounded-md  hover:bg-blue-600 transition"
+        >
+          Edit
+        </button>
+        <button
+          onClick={handleOnDelete}
+          className="bg-red-500 text-white px-4 py-1 rounded-md  hover:bg-red-600 transition"
+        >
+          Delete
+        </button>
+      </div>
     </div>
   )
 }

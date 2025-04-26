@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Menu, X } from 'lucide-react'
+import { JournalContext } from '../context/JournalProvider'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const {logout} = useContext(JournalContext)
 
   return (
     <nav className="bg-white shadow-md border-b-2 border-orange-500">
@@ -27,6 +29,7 @@ const Navbar = () => {
           >
             ➕ Create Journal
           </Link>
+        <button onClick={()=>logout()}>Logout</button>
         </div>
 
         {/* Mobile Menu Button */}

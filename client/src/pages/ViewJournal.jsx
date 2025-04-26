@@ -8,10 +8,10 @@ const ViewJournal = () => {
   const [journalData, setJournalData] = useState({})
 
   const params = useParams()
-  const { backendUrl } = useContext(JournalContext)
+  const { backendUrl,token } = useContext(JournalContext)
   const fetchJournalData = async () => {
     try {
-      const response = await axios.get(backendUrl + 'journals/' + params.id)
+      const response = await axios.get(backendUrl + 'journals/' + params.id,{headers:{'Authorization':`Bearer ${token}`}})
       const responseData = response.data.journal
       if (!responseData) {
         return alert('Journal Data Not found')
@@ -24,7 +24,7 @@ const ViewJournal = () => {
 
   useEffect(() => {
     fetchJournalData()
-    console.log(journalData)
+    
   }, [])
 
   const formattedDate = journalData.date

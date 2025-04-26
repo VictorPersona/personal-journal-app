@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState, useContext,  } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { JournalContext } from '../context/JournalProvider'
 import axios from 'axios'
 
@@ -11,19 +11,28 @@ const EditForm = () => {
     console.warn('⚠️ backendUrl is not defined in context')
   }
 
+  const navigate = useNavigate()
   const fetchJournalData = async () => {
-    console.log('Token :', token)
-    const response = await axios.get(backendUrl + 'journals/' + params.id, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    const responseData = await response.data.journal
-    if (!responseData) {
-      return alert('Journal not found')
+    try {
+      const response = await axios.get(backendUrl + 'journals/' + params.id, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      const responseData = await response.data.journal
+      if (!responseData) {
+        return alert('Journal not found')
+      }
+      setJournalData({
+        title: responseData.title,
+        description: responseData.description,
+      })
+    } catch (error) {
+      if (error.response?.status === 401) {
+        localStorage.removeItem('token')
+        window.location.href = '/login'
+      } else {
+        console.error('Unable to fetch the Journals')
+      }
     }
-    setJournalData({
-      title: responseData.title,
-      description: responseData.description,
-    })
   }
   const onChangeHandler = (e) => {
     const { id, value } = e.target
@@ -45,6 +54,7 @@ const EditForm = () => {
       )
       await fetchAllJorunalData()
       console.log('Journal Updated ', response.data)
+      navigate('/')
     } catch (error) {
       console.error('Error in Updating Journal')
     }
