@@ -5,8 +5,8 @@ import { JournalContext } from '../context/JournalProvider'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const {logout} = useContext(JournalContext)
-
+  const {logout,token} = useContext(JournalContext)
+  
   return (
     <nav className="bg-white shadow-md border-b-2 border-orange-500">
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -17,20 +17,20 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-6 items-center">
-          <Link
+          {token &&<Link
             to="/list"
             className="text-gray-700 hover:text-orange-600 transition font-medium"
           >
             📝 List Journals
           </Link>
-          <Link
+          }<Link
             to="/create"
             className="bg-orange-500 text-white px-4 py-2 rounded-full hover:bg-orange-600 transition"
           >
             ➕ Create Journal
           </Link>
-        <button onClick={()=>logout()}>Logout</button>
-        </div>
+       {token && <button onClick={()=>logout()}>Logout</button>
+}</div>
 
         {/* Mobile Menu Button */}
         <button
